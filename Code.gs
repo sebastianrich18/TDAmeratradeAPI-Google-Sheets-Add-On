@@ -1,5 +1,5 @@
 let authLink = "https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Fsrichel.com%2Fcallback.html&client_id=RO9GBKGRSOFBTC3TVP5C8ZNRSAAYGSWA%40AMER.OAUTHAP";
-let callbackURI = 'https://script.google.com/macros/d/1MCxVet4Di2v03zlP5KaAKNrDvzbb4TMuof-RJ_qBlBzLyrMuR2H7kg1O/usercallback';
+let callbackURI = 'https://srichel.com/callback.html';
 let apikey = 'RO9GBKGRSOFBTC3TVP5C8ZNRSAAYGSWA';
 
 
