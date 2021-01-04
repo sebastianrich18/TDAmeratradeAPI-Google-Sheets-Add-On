@@ -79,3 +79,6 @@ In order to get your portfolio and other price data you must log in to TDAmeratr
     - marketCap
     - bookValuePerShare
     - beta
+
+
+<h5> THIS ADD-ON NOR ITS CONTRIBUTERS ARE ENDORSED BY OR AFFILIATED WITH TD AMERATRADE </h5>
