@@ -2,7 +2,8 @@
 An add-on for Google Sheets that intagrates the TDAmeratrade api to get quotes, fundamental data, and a portfolio breakdown
 
 # How to install
-1. Create a TDAmeratrade dev account. Follow the instrctions on their [Getting Started Guide](https://developer.tdameritrade.com/content/getting-started)
+1. Create a TDAmeratrade dev account. Follow the instrctions on their [Getting Started Guide](https://developer.tdameritrade.com/content/getting-started). 
+    - When it asks for a `Callback URI` use `https://srichel.com/callback.html`
 2. Within google sheets, click on `Tools` then `Script editor`
 3. Delete anything that may have auto-generated
 4. Copy all the code in [code.gs](code.gs)
