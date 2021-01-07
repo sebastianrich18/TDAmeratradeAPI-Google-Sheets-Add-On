@@ -2,11 +2,13 @@
 An add-on for Google Sheets that intagrates the TDAmeratrade api to get quotes, fundamental data, and a portfolio breakdown
 
 # How to install
-1. Within google sheets, click on `Tools` then `Script editor`
-2. Delete `function myFunction() { }`
-3. Copy all the code in [code.gs](code.gs)
-4. Paste everything into the google script editor
-5. Click save and return to sheets
+1. Create a TDAmeratrade dev account. Follow the instrctions on their [Getting Started Guide](https://developer.tdameritrade.com/content/getting-started)
+2. Within google sheets, click on `Tools` then `Script editor`
+3. Delete anything that may have auto-generated
+4. Copy all the code in [code.gs](code.gs)
+5. Paste everything into the google script editor
+6. Paste your TDAmeratrade API key in the quotes on line 1
+7. Click save and return to sheets
 
 # Logging In
 In order to get your portfolio and other price data you must log in to TDAmeratrade, here's how.
