@@ -95,44 +95,50 @@ function inputCode() {
 }
 
 
-function getPositionsData(accIndex) {
-    let url = `https://api.tdameritrade.com/v1/accounts/`;
-    url = addParams(url, {"fields":"positions"})
-    let headers = {"Authorization":` Bearer ${getAccessToken()}`};
-    let options = {"headers":headers}
-    let data = JSON.parse(UrlFetchApp.fetch(url,options).getContentText());
-    let cash = data[accIndex]['securitiesAccount']['currentBalances']['cashAvailableForTrading']
-    let positions = data[accIndex]['securitiesAccount']['positions'];
-    let positionData = []
-    let arr = [];
-    arr.push(["Symbol", "Shares", "Avg Price", "Mkt price", "P/L Day %", "P/L Day $", "P/L Total %", "P/L Total $", 'Value', 'Description'])
-    for (let i=0; i<positions.length; i++) {
-      if (positions[i]['instrument']['symbol'] != "MMDA1"){
-        let data = {}
-        data['symbol'] = positions[i]['instrument']['symbol']
-        data['shares'] = positions[i]['longQuantity']
-        data['avgPrice'] = positions[i]['averagePrice']
-        data['plDay'] = positions[i]['currentDayProfitLoss']
-        data['plDayPercent'] = positions[i]['currentDayProfitLossPercentage'] / 100.0
-        data['value'] = positions[i]['marketValue']
-       
-        let quote = getQuote(data['symbol'])
-        data['mktPrice'] = quote['lastPrice']
-        data['description'] = quote['description']
-
-        data['plTotal'] = (data['mktPrice'] - data['avgPrice']) * data['shares']
-        data['plTotalPercent'] = ((data['mktPrice'] - data['avgPrice']) / data['avgPrice']) 
-
-        Logger.log(data)
-        positionData.push(data)
-        arr.push([data['symbol'], data['shares'], data['avgPrice'], data['mktPrice'], data['plDayPercent'], data['plDay'], data['plTotalPercent'], data['plTotal'], data['value'], data['description']])
+function getPositionsData(accNumber) {
+  let url = `https://api.tdameritrade.com/v1/accounts/${accNumber}`;
+  url = addParams(url, {"fields":"positions"})
+  let headers = {"Authorization":` Bearer ${getAccessToken()}`};
+  let options = {"headers":headers}
+  let data = ""
+  try {
+    data = JSON.parse(UrlFetchApp.fetch(url,options).getContentText());
+  } catch (e) {
+    Logger.log("get positions error:")
+    Logger.log(e)
+    throw new Error("Could not find account, make sure your account number is correct")
+  }
+   Logger.log("acc data: " + data)
+  let cash = data['securitiesAccount']['currentBalances']['cashAvailableForTrading']
+  let positions = data['securitiesAccount']['positions'];
+  let positionData = []
+  let arr = [];
+  arr.push(["Symbol", "Shares", "Avg Price", "Mkt price", "P/L Day %", "P/L Day $", "P/L Total %", "P/L Total $", 'Value', 'Description'])
+  for (let i=0; i<positions.length; i++) {
+    if (positions[i]['instrument']['symbol'] != "MMDA1"){
+      let data = {}
+      data['symbol'] = positions[i]['instrument']['symbol']
+      data['shares'] = positions[i]['longQuantity']
+      data['avgPrice'] = positions[i]['averagePrice']
+      data['plDay'] = positions[i]['currentDayProfitLoss']
+      data['plDayPercent'] = positions[i]['currentDayProfitLossPercentage'] / 100.0
+      data['value'] = positions[i]['marketValue']
+      
+      let quote = getQuote(data['symbol'])
+      data['mktPrice'] = quote['lastPrice']
+      data['description'] = quote['description']
+      
+      data['plTotal'] = (data['mktPrice'] - data['avgPrice']) * data['shares']
+      data['plTotalPercent'] = ((data['mktPrice'] - data['avgPrice']) / data['avgPrice']) 
+      Logger.log(data)
+      positionData.push(data)
+      arr.push([data['symbol'], data['shares'], data['avgPrice'], data['mktPrice'], data['plDayPercent'], data['plDay'], data['plTotalPercent'], data['plTotal'], data['value'], data['description']])
       }
-    }
-    Logger.log(cash)
-    arr.push(['Cash', '', '', '', '', '', '', '', cash])
-    return arr
+  }
+  Logger.log(cash)
+  arr.push(['Cash', '', '', '', '', '', '', '', cash])
+  return arr
 }
-
 function getQuote(ticker) {
     let url = `https://api.tdameritrade.com/v1/marketdata/${ticker}/quotes?apikey=${apikey}`;
     let headers = {"Authorization":` Bearer ${getAccessToken()}`};
