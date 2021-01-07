@@ -1,5 +1,5 @@
-const callbackURI = 'https;//srichel.com/callback.html';
 const apikey = '';
+const callbackURI = 'https;//srichel.com/callback.html';
 const authLink = `https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=${encodeURIComponent(callbackURI)}&client_id=${apikey}%40AMER.OAUTHAP`;
 
 
